@@ -1,0 +1,23 @@
+﻿@page "/"
+
+<p>Hello, @name.ToUpper()</p>
+
+<div>
+    <h3>Movie</h3>
+    <MoviesList Movies="movies"/>
+
+</div>
+@code{
+
+       private List<Movie> movies = new List<Movie>()
+        {
+        new Movie(){Title = "<b>Spider-Man: Far From Home</b>", ReleaseDate = new DateTime(2019, 7, 2)},
+        new Movie(){Title = "<i>Moana</i>", ReleaseDate = new DateTime(2019, 7, 2)},
+        new Movie(){Title = "<b>Spaceballs</b>", ReleaseDate = new DateTime(2019, 7, 2)}
+        };
+    string name = "Tanner";
+
+
+
+
+}
