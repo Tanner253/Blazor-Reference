@@ -2,8 +2,19 @@
 <div>
     <p>Title: @((MarkupString)Movie.Title)</p>
     <p>Release Date: <b>@Movie.ReleaseDate.ToString("dd MM yyyy")</b></p>
+    @if (DisplayButtons)
+    {
+        <div>
+            <button @onclick="@(() => DeleteMovie.InvokeAsync(Movie))">DELETE</button>
+        </div>
+
+    }
 
 </div>
 @code {
     [Parameter] public Movie Movie { get; set; }
+    [Parameter] public bool DisplayButtons { get; set; } = false;
+    [Parameter] public EventCallback<Movie> DeleteMovie { get; set; }
+
+
 }

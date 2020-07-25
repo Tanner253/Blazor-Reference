@@ -1,18 +1,39 @@
-﻿<h3>MoviesList</h3>
-
+﻿
 @if (Movies == null)
 {
-<img src="https://media1.giphy.com/media/3oEjI6SIIHBdRxXI40/200.gif" alt="Alternate Text" />
+    @*<img src="https://media1.giphy.com/media/3oEjI6SIIHBdRxXI40/200.gif" alt="Alternate Text" />*@
+    @if (NullTemplate != null)
+    {
+        @NullTemplate
+    }
+    else
+    {
+        //Default media
+        <img src="https://media1.giphy.com/media/3oEjI6SIIHBdRxXI40/200.gif" alt="Alternate Text" />
+
+    }
+
 }
 else if (Movies.Count == 0)
 {
+    @if (EmptyTemplate != null)
+    {
+        @EmptyTemplate
+    }
+    else
+    {
+        //Default media
     <text>There are no records...</text>
+    }
 }
 else
 {
+
+    <input type="checkbox" @bind="displayButtons" />
+
     foreach (var movie in Movies)
     {
-        <IndividualMovie Movie="movie"/>
+        <IndividualMovie Movie="movie" DisplayButtons="displayButtons" DeleteMovie="DeleteMovie" />
     }
 }
 
@@ -20,11 +41,15 @@ else
 @code {
 
     [Parameter] public List<Movie> Movies { get; set; }
+    [Parameter] public RenderFragment NullTemplate { get; set; }
+    [Parameter] public RenderFragment EmptyTemplate { get; set; }
 
-    protected  override void OnInitialized()
+
+    bool displayButtons = false;
+
+    private void DeleteMovie(Movie movie)
     {
-
-   
+        Movies.Remove(movie);
     }
 
 
