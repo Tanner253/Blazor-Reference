@@ -16,10 +16,17 @@ namespace BlazorMovie.Client
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
+            ConfigureServices(builder.Services); //REQUIRED DI FOR CLIENT PROJ
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
             await builder.Build().RunAsync();
+        }
+
+        private static void ConfigureServices(IServiceCollection services)
+        {
+            services.AddOptions(); //Authorization system
+            services.AddSingleton<SingletonService>();
         }
     }
 }

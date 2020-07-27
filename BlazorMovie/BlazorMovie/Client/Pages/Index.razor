@@ -1,31 +1,28 @@
 ﻿@page "/"
+@inject Helpers.IRepository repository
 
 <p>Hello, @name.ToUpper()</p>
 
 <div>
     <h3>Movie</h3>
-    <MoviesList Movies="movies" >
-        <NullTemplate>
-                <span style="color:red">This is loading ...</span>
-        </NullTemplate>
-        <EmptyTemplate>
-            <span style="color:blue">No Records to see</span>
-        </EmptyTemplate>
+    <MoviesList Movies="movies" />
+      
+    <button @onclick="AddNewMovie">Add new movie</button>
 
-    </MoviesList>
+
    
 
 </div>
 @code{
     private List<Movie> movies;
-    protected override void OnInitialized()
+    protected async override Task OnInitializedAsync()
     {
-        //movies = new List<Movie>()
-        //{
-        //           new Movie(){Title = "<b>Spider-Man: Far From Home</b>", ReleaseDate = new DateTime(2019, 7, 2)},
-        //    new Movie(){Title = "<i>Moana</i>", ReleaseDate = new DateTime(2019, 7, 2)},
-        //    new Movie(){Title = "<b>Spaceballs</b>", ReleaseDate = new DateTime(2019, 7, 2)}
-        //};
+        
+        movies = repository.GetMovies();
+    }
+    private void AddNewMovie()
+    {
+        movies.Add(new Movie() { Title = "Sameple", ReleaseDate = DateTime.Today });
     }
 
     string name = "Tanner";
