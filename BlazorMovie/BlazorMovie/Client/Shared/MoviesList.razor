@@ -1,4 +1,4 @@
-﻿
+﻿@inject IJSRuntime js
 
 
 <input type="checkbox" @bind="displayButtons" />
@@ -19,9 +19,14 @@
 
     bool displayButtons = false;
 
-    private void DeleteMovie(Movie movie)
+    private async Task DeleteMovie(Movie movie)
     {
+        var confirmed = await js.InvokeAsync<bool>("confirm", $"Are you sure you want to delete {movie.Title}?");
+        if (confirmed)
+        {
+
         Movies.Remove(movie);
+        }
     }
     protected override void OnInitialized()
     {
